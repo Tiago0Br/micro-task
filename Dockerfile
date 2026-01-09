@@ -1,30 +1,33 @@
 FROM node:20-alpine AS base
+# Habilita o pnpm via Corepack (nativo do Node moderno)
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
-# Fase 1: Prune (Separa apenas o necessário para o app específico)
-# Isso evita copiar o monorepo inteiro para dentro de cada container
+# Fase 1: Prune
 FROM base AS pruner
 WORKDIR /app
 RUN npm install -g turbo
 COPY . .
-# Este argumento define qual app vamos montar (ex: @microtask/api-gateway)
 ARG APP_NAME
+# O turbo prune gera uma pasta "out" com o lockfile correto
 RUN turbo prune --scope=${APP_NAME} --docker
 
-# Fase 2: Instalador (Instala dependências)
+# Fase 2: Instalador
 FROM base AS installer
 WORKDIR /app
-# Copia apenas os arquivos de dependência (package.json, lockfile) gerados pelo prune
-COPY --from=pruner /app/out/json/ .
-COPY --from=pruner /app/out/package-lock.json ./package-lock.json
-RUN npm install
 
-# Fase 3: Desenvolvimento (Ou Build)
+# Copia os arquivos de configuração do workspace gerados pelo prune
+COPY --from=pruner /app/out/json/ .
+COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+
+# Instala as dependências usando pnpm
+RUN pnpm install --frozen-lockfile
+
+# Fase 3: Build/Run
 FROM base AS dev
 WORKDIR /app
-# Copia as dependências instaladas
 COPY --from=installer /app/ .
-# Copia o código fonte filtrado
 COPY --from=pruner /app/out/full/ .
 
-# Comando padrão (pode ser sobrescrito no docker-compose)
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "run", "dev"]
