@@ -7,19 +7,19 @@
 ## 🏗️ Phase 1: Infrastructure & Foundation (Days 1-3)
 Setting up the monorepo, container orchestration, and database strategy.
 
-- [ ] **Monorepo Setup**
+- [X] **Monorepo Setup**
   - [X] Initialize Turborepo structure.
   - [X] Create universal `Dockerfile` with `turbo prune` strategy.
-  - [ ] Configure shared packages (`types`, `eslint-config`, `tsconfig`).
+  - [X] Configure shared packages (`types`, `tsconfig`).
 - [ ] **Container Orchestration**
   - [X] Setup `docker-compose.yml` for dev environment.
   - [X] Configure **PostgreSQL** container.
   - [ ] Configure **RabbitMQ** container (Management Plugin enabled).
-- [ ] **Database Architecture**
-  - [ ] Define strategy: Single DB instance with multiple **Schemas**.
-  - [ ] Configure TypeORM for `auth-service` (Schema: `auth`).
-  - [ ] Configure TypeORM for `tasks-service` (Schema: `tasks`).
-  - [ ] Configure TypeORM for `notifications-service` (Schema: `notifications`).
+- [X] **Database Architecture**
+  - [X] Define strategy: Single DB instance with multiple **Schemas**.
+  - [X] Configure TypeORM for `auth-service` (Schema: `auth`).
+  - [X] Configure TypeORM for `tasks-service` (Schema: `tasks`).
+  - [X] Configure TypeORM for `notifications-service` (Schema: `notifications`).
 
 ## 🔐 Phase 2: Backend Core & Security (Days 4-7)
 Building the business logic, authentication, and HTTP communication.
