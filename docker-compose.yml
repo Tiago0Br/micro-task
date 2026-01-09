@@ -13,9 +13,23 @@ services:
       - ./.docker/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - microtask-net
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: microtask-rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - microtask-net
 
 volumes:
   postgres_data:
+  rabbitmq_data:
 
 networks:
   microtask-net:
