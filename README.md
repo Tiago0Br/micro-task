@@ -24,10 +24,10 @@ Setting up the monorepo, container orchestration, and database strategy.
 ## 🔐 Phase 2: Backend Core & Security (Days 4-7)
 Building the business logic, authentication, and HTTP communication.
 
-- [ ] **API Gateway**
-  - [ ] Setup NestJS Gateway application.
-  - [ ] Configure Proxy to internal microservices.
-  - [ ] Setup **Swagger/OpenAPI** documentation endpoint.
+- [X] **API Gateway**
+  - [X] Setup NestJS Gateway application.
+  - [X] Configure Proxy to internal microservices.
+  - [X] Setup **Swagger/OpenAPI** documentation endpoint.
 - [ ] **Auth Service**
   - [ ] Implement User Entity & Repository.
   - [ ] Implement Password Hashing (Argon2/Bcrypt).
