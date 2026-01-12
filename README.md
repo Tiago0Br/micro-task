@@ -11,10 +11,10 @@ Setting up the monorepo, container orchestration, and database strategy.
   - [X] Initialize Turborepo structure.
   - [X] Create universal `Dockerfile` with `turbo prune` strategy.
   - [X] Configure shared packages (`types`, `tsconfig`).
-- [ ] **Container Orchestration**
+- [X] **Container Orchestration**
   - [X] Setup `docker-compose.yml` for dev environment.
   - [X] Configure **PostgreSQL** container.
-  - [ ] Configure **RabbitMQ** container (Management Plugin enabled).
+  - [X] Configure **RabbitMQ** container (Management Plugin enabled).
 - [X] **Database Architecture**
   - [X] Define strategy: Single DB instance with multiple **Schemas**.
   - [X] Configure TypeORM for `auth-service` (Schema: `auth`).
@@ -28,11 +28,10 @@ Building the business logic, authentication, and HTTP communication.
   - [X] Setup NestJS Gateway application.
   - [X] Configure Proxy to internal microservices.
   - [X] Setup **Swagger/OpenAPI** documentation endpoint.
-- [ ] **Auth Service**
-  - [ ] Implement User Entity & Repository.
-  - [ ] Implement Password Hashing (Argon2/Bcrypt).
-  - [ ] Implement JWT Strategy (Sign & Verify).
-  - [ ] Create **JWT Guard** for the API Gateway.
+- [X] **Auth Service**
+  - [X] Implement User Entity & Repository.
+  - [X] Implement Password Hashing (Bcrypt).
+  - [X] Implement JWT Strategy (Sign & Verify).
 - [ ] **Tasks Service (CRUD)**
   - [ ] Design Entities: `Task`, `Comment`.
   - [ ] Implement DTOs with `class-validator`.
@@ -82,7 +81,6 @@ Refining the experience and documenting the journey.
   - [ ] Write detailed **README.md**.
   - [ ] Create Architecture Diagram.
   - [ ] Write "Trade-offs & Technical Decisions" section.
-  - [ ] Record Demo Video.
 
 ---
 
