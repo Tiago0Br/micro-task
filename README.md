@@ -32,8 +32,8 @@ Building the business logic, authentication, and HTTP communication.
   - [X] Implement User Entity & Repository.
   - [X] Implement Password Hashing (Bcrypt).
   - [X] Implement JWT Strategy (Sign & Verify).
-- [ ] **Tasks Service (CRUD)**
-  - [ ] Design Entities: `Task`, `Comment`.
+- [X] **Tasks Service (CRUD)**
+  - [X] Design Entities: `Task`, `Comment`.
   - [ ] Implement DTOs with `class-validator`.
   - [ ] Implement CRUD endpoints (Create, Read, Update, Delete).
   - [ ] Verify HTTP communication: Gateway -> Tasks Service.

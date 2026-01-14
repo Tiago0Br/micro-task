@@ -30,7 +30,7 @@ export class Task {
   @Column()
   title: string
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'text' })
   description: string
 
   @Column()
