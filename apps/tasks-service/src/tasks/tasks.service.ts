@@ -11,12 +11,13 @@ export class TasksService {
     private readonly tasksRepository: Repository<Task>
   ) {}
 
-  async create(dto: CreateTaskDto) {
+  async create(dto: CreateTaskDto, userId: string) {
     const task = this.tasksRepository.create({
       title: dto.title,
       description: dto.description,
       deadline: dto.deadline,
-      priority: dto.priority
+      priority: dto.priority,
+      creatorId: userId
     })
 
     await this.tasksRepository.save(task)
@@ -25,7 +26,7 @@ export class TasksService {
       id: task.id,
       title: task.title,
       description: task.description,
-      deadline: task.deadline.toISOString(),
+      deadline: task.deadline,
       priority: task.priority,
       status: task.status
     }
