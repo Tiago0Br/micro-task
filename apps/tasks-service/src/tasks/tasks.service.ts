@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { CreateTaskDto } from './dtos/create-task.dto'
+import { UpdateTaskDto } from './dtos/update-task.dto'
 import { Task } from './entities/task.entity'
 
 @Injectable()
@@ -30,5 +31,22 @@ export class TasksService {
       priority: task.priority,
       status: task.status
     }
+  }
+
+  async update(id: string, dto: UpdateTaskDto) {
+    await this.tasksRepository.update(id, {
+      title: dto.title,
+      description: dto.description,
+      deadline: dto.deadline,
+      priority: dto.priority
+    })
+  }
+
+  getAll() {
+    return this.tasksRepository.find()
+  }
+
+  async delete(id: string) {
+    await this.tasksRepository.delete(id)
   }
 }

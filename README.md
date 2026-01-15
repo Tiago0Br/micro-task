@@ -34,9 +34,9 @@ Building the business logic, authentication, and HTTP communication.
   - [X] Implement JWT Strategy (Sign & Verify).
 - [X] **Tasks Service (CRUD)**
   - [X] Design Entities: `Task`, `Comment`.
-  - [ ] Implement DTOs with `class-validator`.
-  - [ ] Implement CRUD endpoints (Create, Read, Update, Delete).
-  - [ ] Verify HTTP communication: Gateway -> Tasks Service.
+  - [X] Implement DTOs with `class-validator`.
+  - [X] Implement CRUD endpoints (Create, Read, Update, Delete).
+  - [X] Verify HTTP communication: Gateway -> Tasks Service.
 
 ## 🎨 Phase 3: Frontend Implementation (Days 8-14)
 Building the User Interface with modern React patterns.
