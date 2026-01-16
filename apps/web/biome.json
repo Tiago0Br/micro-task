@@ -3,7 +3,10 @@
   "root": false,
   "extends": "//",
   "files": {
-    "includes": ["!routeTree.gen.ts"]
+    "includes": ["**", "!src/routeTree.gen.ts"]
+  },
+  "linter": {
+    "includes": ["**", "!src/routeTree.gen.ts"]
   },
   "css": {
     "parser": {

@@ -43,12 +43,12 @@ Building the User Interface with modern React patterns.
 
 - [X] **Frontend Infrastructure**
   - [X] Initialize React + Vite + TypeScript.
-  - [ ] Setup **TanStack Router** (File-based routing).
+  - [X] Setup **TanStack Router** (File-based routing).
   - [X] Install & Configure **shadcn/ui** + Tailwind CSS.
-- [ ] **Authentication UI**
-  - [ ] Build Login/Register forms (`react-hook-form` + `zod`).
-  - [ ] Implement Auth State Management (**Zustand**).
-  - [ ] Handle Protected Routes (Redirect if unauthenticated).
+- [X] **Authentication UI**
+  - [X] Build Login/Register forms (`react-hook-form` + `zod`).
+  - [X] Implement Auth State Management (**Zustand**).
+  - [X] Handle Protected Routes (Redirect if unauthenticated).
 - [ ] **Task Management UI**
   - [ ] Build Data Table for Task List (Filtering/Sorting).
   - [ ] Build Task Creation/Edit Modals.
