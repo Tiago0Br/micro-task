@@ -6,8 +6,8 @@ import { z } from 'zod'
 import { loginRequest } from '@/http/login'
 
 export const loginSchema = z.object({
-  email: z.email({ message: 'E-mail inválido' }),
-  password: z.string().min(6, { message: 'A senha deve ter no mínimo 6 caracteres' })
+  email: z.email({ error: 'E-mail inválido' }),
+  password: z.string().min(6, { error: 'A senha deve ter no mínimo 6 caracteres' })
 })
 
 export type LoginFormValues = z.infer<typeof loginSchema>
