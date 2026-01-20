@@ -4,15 +4,17 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { loginRequest } from '@/http/login'
+import { useAuthStore } from '@/stores/auth.store'
 
-export const loginSchema = z.object({
+const loginSchema = z.object({
   email: z.email({ error: 'E-mail inválido' }),
   password: z.string().min(6, { error: 'A senha deve ter no mínimo 6 caracteres' })
 })
 
-export type LoginFormValues = z.infer<typeof loginSchema>
+type LoginFormValues = z.infer<typeof loginSchema>
 
 export function useLogin() {
+  const login = useAuthStore((state) => state.login)
   const navigate = useNavigate()
 
   const loginForm = useForm<LoginFormValues>({
@@ -25,7 +27,9 @@ export function useLogin() {
 
   async function onLoginFormSubmit({ email, password }: LoginFormValues) {
     try {
-      const { user } = await loginRequest({ email, password })
+      const { user, access_token: token } = await loginRequest({ email, password })
+
+      login(token, user)
 
       toast.success(`Bem-vindo(a) ${user.name}`)
 
