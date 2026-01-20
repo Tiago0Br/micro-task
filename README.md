@@ -50,7 +50,7 @@ Building the User Interface with modern React patterns.
   - [X] Implement Auth State Management (**Zustand**).
   - [X] Handle Protected Routes (Redirect if unauthenticated).
 - [ ] **Task Management UI**
-  - [ ] Build Data Table for Task List (Filtering/Sorting).
+  - [X] Build Data Table for Task List (Filtering/Sorting).
   - [ ] Build Task Creation/Edit Modals.
   - [ ] Implement Task Detail View.
   - [ ] Connect UI to Backend API.
