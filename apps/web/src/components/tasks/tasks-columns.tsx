@@ -10,16 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-
-export type Task = {
-  id: string
-  title: string
-  description: string
-  status: 'TODO' | 'IN_PROGRESS' | 'DONE'
-  priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
-  deadline: string
-  createdAt: string
-}
+import type { Task } from '@/http/get-tasks'
 
 export const TasksColumns: ColumnDef<Task>[] = [
   {
