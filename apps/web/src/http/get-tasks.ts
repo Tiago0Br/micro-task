@@ -3,7 +3,7 @@ import { api } from '@/lib/axios'
 export type Task = {
   id: string
   title: string
-  description: string
+  description?: string
   status: 'TODO' | 'IN_PROGRESS' | 'DONE'
   priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT'
   deadline: string
