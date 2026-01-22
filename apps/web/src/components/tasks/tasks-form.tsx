@@ -47,7 +47,7 @@ interface TaskFormProps {
 export function TaskForm({ defaultValues, onSubmit, isLoading }: TaskFormProps) {
   const form = useForm<TaskFormValues>({
     resolver: zodResolver(taskSchema),
-    defaultValues: defaultValues || {
+    defaultValues: defaultValues ?? {
       title: '',
       description: '',
       deadline: '',

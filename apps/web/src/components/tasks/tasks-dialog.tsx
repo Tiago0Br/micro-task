@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog'
-import { createTask } from '@/http/create-task'
+import { createTaskRequest } from '@/http/create-task'
 import { queryClient } from '@/lib/query-client'
 import { TaskForm, type TaskFormValues } from './tasks-form'
 
@@ -20,13 +20,14 @@ export function CreateTaskDialog() {
 
   const { mutate: createTaskFn, isPending } = useMutation({
     mutationFn: async (data: TaskFormValues) =>
-      createTask({
+      createTaskRequest({
         ...data,
         deadline: new Date(data.deadline).toISOString()
       }),
     onSuccess: () => {
       setOpen(false)
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
+      toast.success('Tarefa criada com sucesso!')
     },
     onError: (error) => {
       console.error('Erro ao criar tarefa:', error)

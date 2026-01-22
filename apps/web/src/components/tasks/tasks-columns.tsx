@@ -1,6 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
+import { toast } from 'sonner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -10,7 +11,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { deleteTaskRequest } from '@/http/delete-task'
 import type { Task } from '@/http/get-tasks'
+import { queryClient } from '@/lib/query-client'
 
 export const TasksColumns: ColumnDef<Task>[] = [
   {
@@ -78,7 +81,11 @@ export const TasksColumns: ColumnDef<Task>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem
               className="text-red-600"
-              onClick={() => console.log('Deletar', task.id)}
+              onClick={async () => {
+                await deleteTaskRequest({ id: task.id })
+                toast.success('Tarefa removida com sucesso')
+                queryClient.invalidateQueries({ queryKey: ['tasks'] })
+              }}
             >
               Deletar
             </DropdownMenuItem>
