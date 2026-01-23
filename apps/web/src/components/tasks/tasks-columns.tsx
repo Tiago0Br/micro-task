@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
@@ -83,6 +84,11 @@ export const TasksColumns: ColumnDef<Task>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
+            <DropdownMenuItem asChild>
+              <Link to={`/tasks/$taskId`} params={{ taskId: task.id }}>
+                Ver detalhes
+              </Link>
+            </DropdownMenuItem>
             <TaskDialog
               trigger={
                 <button
