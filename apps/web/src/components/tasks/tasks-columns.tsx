@@ -14,6 +14,7 @@ import {
 import { deleteTaskRequest } from '@/http/delete-task'
 import type { Task } from '@/http/get-tasks'
 import { queryClient } from '@/lib/query-client'
+import { TaskDialog } from './tasks-dialog'
 
 export const TasksColumns: ColumnDef<Task>[] = [
   {
@@ -67,6 +68,12 @@ export const TasksColumns: ColumnDef<Task>[] = [
     cell: ({ row }) => {
       const task = row.original
 
+      async function handleDeleteTask() {
+        await deleteTaskRequest({ id: task.id })
+        toast.success('Tarefa removida com sucesso')
+        queryClient.invalidateQueries({ queryKey: ['tasks'] })
+      }
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -76,17 +83,18 @@ export const TasksColumns: ColumnDef<Task>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => console.log('Editar', task.id)}>
-              Editar
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="text-red-600"
-              onClick={async () => {
-                await deleteTaskRequest({ id: task.id })
-                toast.success('Tarefa removida com sucesso')
-                queryClient.invalidateQueries({ queryKey: ['tasks'] })
-              }}
-            >
+            <TaskDialog
+              trigger={
+                <button
+                  type="button"
+                  className="w-full flex text-sm px-2 py-1.5 hover:bg-accent hover:text-accent-foreground rounded-md"
+                >
+                  Editar
+                </button>
+              }
+              taskData={task}
+            />
+            <DropdownMenuItem className="text-red-600" onClick={handleDeleteTask}>
               Deletar
             </DropdownMenuItem>
           </DropdownMenuContent>

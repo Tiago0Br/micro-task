@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { format } from 'date-fns'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
@@ -19,6 +20,7 @@ import {
   SelectValue
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import type { Task } from '@/http/get-tasks'
 
 export enum TaskPriority {
   LOW = 'LOW',
@@ -39,7 +41,7 @@ export const taskSchema = z.object({
 export type TaskFormValues = z.infer<typeof taskSchema>
 
 interface TaskFormProps {
-  defaultValues?: TaskFormValues
+  defaultValues?: Task
   onSubmit: (data: TaskFormValues) => void
   isLoading: boolean
 }
@@ -47,11 +49,13 @@ interface TaskFormProps {
 export function TaskForm({ defaultValues, onSubmit, isLoading }: TaskFormProps) {
   const form = useForm<TaskFormValues>({
     resolver: zodResolver(taskSchema),
-    defaultValues: defaultValues ?? {
-      title: '',
-      description: '',
-      deadline: '',
-      priority: TaskPriority.LOW
+    defaultValues: {
+      title: defaultValues?.title ?? '',
+      description: defaultValues?.description ?? '',
+      deadline: defaultValues?.deadline
+        ? format(defaultValues.deadline, 'yyyy-MM-dd')
+        : '',
+      priority: TaskPriority[defaultValues?.priority ?? 'LOW']
     }
   })
 
