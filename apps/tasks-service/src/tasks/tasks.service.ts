@@ -29,7 +29,8 @@ export class TasksService {
       description: task.description,
       deadline: task.deadline,
       priority: task.priority,
-      status: task.status
+      status: task.status,
+      createdAt: task.createdAt
     }
   }
 

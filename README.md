@@ -51,8 +51,8 @@ Building the User Interface with modern React patterns.
   - [X] Handle Protected Routes (Redirect if unauthenticated).
 - [ ] **Task Management UI**
   - [X] Build Data Table for Task List (Filtering/Sorting).
-  - [ ] Build Task Creation/Edit Modals.
-  - [ ] Implement Task Detail View.
+  - [X] Build Task Creation/Edit Modals.
+  - [X] Implement Task Detail View.
   - [ ] Connect UI to Backend API.
 
 ## 📡 Phase 4: Distributed Systems & Real-time (Days 15-18)
