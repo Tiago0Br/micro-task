@@ -24,46 +24,46 @@ export enum TaskStatus {
 @Entity({ schema: 'tasks' })
 export class Task {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id!: string
 
   @Column()
-  title: string
+  title!: string
 
   @Column({ type: 'text' })
-  description: string
+  description!: string
 
   @Column()
-  deadline: Date
+  deadline!: Date
 
   @Column({
     type: 'enum',
     enum: TaskPriority,
     default: TaskPriority.LOW
   })
-  priority: TaskPriority
+  priority!: TaskPriority
 
   @Column({
     type: 'enum',
     enum: TaskStatus,
     default: TaskStatus.TODO
   })
-  status: TaskStatus
+  status!: TaskStatus
 
   @Column()
-  creatorId: string
+  creatorId!: string
 
   @Column('simple-array', { nullable: true })
-  assigneeIds: string[]
+  assigneeIds!: string[]
 
   @CreateDateColumn()
-  createdAt: Date
+  createdAt!: Date
 
   @UpdateDateColumn()
-  updatedAt: Date
+  updatedAt!: Date
 
   @OneToMany(
     () => Comment,
     (comment) => comment.task
   )
-  comments: Comment[]
+  comments!: Comment[]
 }

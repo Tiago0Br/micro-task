@@ -9,20 +9,20 @@ import {
 @Entity({ schema: 'auth' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id!: string
 
   @Column({ unique: true })
-  email: string
+  email!: string
 
   @Column()
-  passwordHash: string
+  passwordHash!: string
 
   @Column({ nullable: true })
-  fullName: string
+  fullName!: string
 
   @CreateDateColumn()
-  createdAt: Date
+  createdAt!: Date
 
   @UpdateDateColumn()
-  updatedAt: Date
+  updatedAt!: Date
 }
