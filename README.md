@@ -1,91 +1,83 @@
-# 🗺️ MicroTask Project Roadmap
+# MicroTask
 
-> **Status:** 🚧 In Development
-> **Timeline:** 20 Days Sprint
-> **Goal:** Build a scalable microservices architecture for task management using modern specialized tools.
+MicroTask is a task management application built with a microservices architecture, organized in a monorepo using **Turborepo** and **pnpm workspaces**. It demonstrates a scalable approach to building distributed systems with modern technologies.
 
-## 🏗️ Phase 1: Infrastructure & Foundation (Days 1-3)
-Setting up the monorepo, container orchestration, and database strategy.
+## 🚀 Tech Stack
 
-- [X] **Monorepo Setup**
-  - [X] Initialize Turborepo structure.
-  - [X] Create universal `Dockerfile` with `turbo prune` strategy.
-  - [X] Configure shared packages (`types`, `tsconfig`).
-- [X] **Container Orchestration**
-  - [X] Setup `docker-compose.yml` for dev environment.
-  - [X] Configure **PostgreSQL** container.
-  - [X] Configure **RabbitMQ** container (Management Plugin enabled).
-- [X] **Database Architecture**
-  - [X] Define strategy: Single DB instance with multiple **Schemas**.
-  - [X] Configure TypeORM for `auth-service` (Schema: `auth`).
-  - [X] Configure TypeORM for `tasks-service` (Schema: `tasks`).
-  - [X] Configure TypeORM for `notifications-service` (Schema: `notifications`).
+### Frontend
+- **React** (Vite)
+- **TypeScript**
+- **TanStack Router** (File-based routing)
+- **Tailwind CSS** & **shadcn/ui**
+- **Zustand** (State management)
+- **TanStack Query** (Data fetching)
 
-## 🔐 Phase 2: Backend Core & Security (Days 4-7)
-Building the business logic, authentication, and HTTP communication.
+### Backend (Microservices)
+- **NestJS** (Framework)
+- **TypeORM** (ORM)
+- **PostgreSQL** (Database)
+- **RabbitMQ** (Message Broker)
+- **Passport.js** (JWT Authentication)
 
-- [X] **API Gateway**
-  - [X] Setup NestJS Gateway application.
-  - [X] Configure Proxy to internal microservices.
-  - [X] Setup **Swagger/OpenAPI** documentation endpoint.
-- [X] **Auth Service**
-  - [X] Implement User Entity & Repository.
-  - [X] Implement Password Hashing (Bcrypt).
-  - [X] Implement JWT Strategy (Sign & Verify).
-- [X] **Tasks Service (CRUD)**
-  - [X] Design Entities: `Task`, `Comment`.
-  - [X] Implement DTOs with `class-validator`.
-  - [X] Implement CRUD endpoints (Create, Read, Update, Delete).
-  - [X] Verify HTTP communication: Gateway -> Tasks Service.
+### Infrastructure & DevOps
+- **Turborepo** (Monorepo management)
+- **pnpm** (Package manager)
+- **Docker** & **Docker Compose** (Containerization)
+- **Biome** (Linting & Formatting)
 
-## 🎨 Phase 3: Frontend Implementation (Days 8-14)
-Building the User Interface with modern React patterns.
+## 🏗️ Architecture
 
-- [X] **Frontend Infrastructure**
-  - [X] Initialize React + Vite + TypeScript.
-  - [X] Setup **TanStack Router** (File-based routing).
-  - [X] Install & Configure **shadcn/ui** + Tailwind CSS.
-- [X] **Authentication UI**
-  - [X] Build Login/Register forms (`react-hook-form` + `zod`).
-  - [X] Implement Auth State Management (**Zustand**).
-  - [X] Handle Protected Routes (Redirect if unauthenticated).
-- [ ] **Task Management UI**
-  - [X] Build Data Table for Task List (Filtering/Sorting).
-  - [X] Build Task Creation/Edit Modals.
-  - [X] Implement Task Detail View.
-  - [ ] Connect UI to Backend API.
+The project consists of several microservices coordinated through an API Gateway:
 
-## 📡 Phase 4: Distributed Systems & Real-time (Days 15-18)
-The "Heavy Lifting": Event-driven architecture and WebSockets.
+- **API Gateway:** Single entry point for the frontend, proxying requests to internal services.
+- **Auth Service:** Handles user registration, login, and JWT-based authentication.
+- **Tasks Service:** Manages task CRUD operations and comments.
+- **Notifications Service:** (In progress) Consumes events via RabbitMQ to send notifications.
+- **Web Frontend:** A modern React application to interact with the system.
 
-- [ ] **Event Bus (RabbitMQ)**
-  - [ ] **Producer (Tasks Service):** Publish `task.created` & `task.updated` events.
-  - [ ] **Consumer (Notifications Service):** Listen to events and persist notifications.
-  - [ ] Handle connection resilience (Retry logic).
-- [ ] **Real-time Gateway (WebSockets)**
-  - [ ] Configure WebSocket Gateway (Socket.io/WS).
-  - [ ] Emit events to specific connected clients.
-- [ ] **Frontend Integration**
-  - [ ] Create `useWebSocket` hook.
-  - [ ] Display Real-time Toasts/Alerts on new events.
-  - [ ] Optimistic UI updates (optional).
+## 🛠️ Getting Started
 
-## 🚀 Phase 5: Polish & Deliverables (Days 19-20)
-Refining the experience and documenting the journey.
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18+)
+- [pnpm](https://pnpm.io/)
+- [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)
 
-- [ ] **Quality of Life**
-  - [ ] Add Skeleton Loaders & Loading States.
-  - [ ] Global Error Handling (Backend & Frontend).
-  - [ ] Docker production build verification.
-- [ ] **Documentation**
-  - [ ] Write detailed **README.md**.
-  - [ ] Create Architecture Diagram.
-  - [ ] Write "Trade-offs & Technical Decisions" section.
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd micro-task
+   ```
+
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+3. Start the infrastructure (Postgres, RabbitMQ):
+   ```bash
+   docker-compose up -d
+   ```
+
+4. Run the applications in development mode:
+   ```bash
+   pnpm dev
+   ```
+
+## 📖 Documentation
+
+- [Roadmap](./ROADMAP.md) - Project progress and future phases.
+- [Monorepo Documentation](./GEMINI.md) - Technical details about the monorepo structure (Portuguese).
+
+## 📜 Scripts
+
+Available in the root directory:
+
+- `pnpm dev`: Start all apps in watch mode.
+- `pnpm build`: Build all applications and packages.
+- `pnpm lint`: Run linting across the workspace.
+- `pnpm format`: Format all files using Biome.
 
 ---
-
-### 🛠️ Tech Stack
-
-**Frontend:** React, TanStack Router, Tailwind, shadcn/ui, Zustand.
-**Backend:** NestJS, TypeORM, Postgres, RabbitMQ, Passport.js.
-**DevOps:** Docker, Docker Compose, Turborepo.
+Built with ❤️ as a demonstration of microservices architecture.
