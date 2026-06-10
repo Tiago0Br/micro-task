@@ -49,6 +49,12 @@ export class TasksController {
     return this.tasksService.getAll()
   }
 
+  @Get(':id')
+  @UseGuards(AuthGuard('jwt'))
+  getById(@Param('id', ParseUUIDPipe) id: string, @CurrentUser() _: LoggedUser) {
+    return this.tasksService.getById(id)
+  }
+
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
   @HttpCode(204)

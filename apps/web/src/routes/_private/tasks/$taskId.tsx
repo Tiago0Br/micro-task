@@ -1,10 +1,11 @@
+import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, redirect, useNavigate, useParams } from '@tanstack/react-router'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { ArrowLeftIcon, BadgeIcon, CalendarIcon, ClockIcon, EditIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import type { Task } from '@/http/get-tasks'
+import { getTaskByIdRequest } from '@/http/get-task-by-id'
 import { useAuthStore } from '@/stores/auth.store'
 
 export const Route = createFileRoute('/_private/tasks/$taskId')({
@@ -27,16 +28,10 @@ function TaskDetailPage() {
   const { taskId } = useParams({ from: '/_private/tasks/$taskId' })
   const navigate = useNavigate()
 
-  const isLoading = false
-  const task: Task = {
-    id: '1',
-    title: 'Tarefa',
-    createdAt: '2026-12-01',
-    deadline: '2026-12-01',
-    priority: 'LOW',
-    status: 'IN_PROGRESS',
-    description: 'Descrição da tarefa'
-  }
+  const { data: task, isLoading } = useQuery({
+    queryKey: ['task', taskId],
+    queryFn: () => getTaskByIdRequest(taskId)
+  })
 
   if (isLoading) return <div className="p-8">Carregando detalhes...</div>
   if (!task) return <div className="p-8">Tarefa não encontrada.</div>
