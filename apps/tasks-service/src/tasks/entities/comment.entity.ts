@@ -11,13 +11,13 @@ import { Task } from './task.entity'
 @Entity({ schema: 'tasks' })
 export class Comment {
   @PrimaryGeneratedColumn('uuid')
-  id!: string
+  id: string
 
   @Column('text')
-  content!: string
+  content: string
 
   @Column()
-  userId!: string
+  userId: string
 
   @ManyToOne(
     () => Task,
@@ -25,11 +25,11 @@ export class Comment {
     { onDelete: 'CASCADE' }
   )
   @JoinColumn({ name: 'taskId' })
-  task!: Task
+  task: Task
 
   @Column()
-  taskId!: string
+  taskId: string
 
   @CreateDateColumn()
-  createdAt!: Date
+  createdAt: Date
 }

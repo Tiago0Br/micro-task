@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { ClientsModule, Transport } from '@nestjs/microservices'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Comment } from './entities/comment.entity'
@@ -9,17 +10,20 @@ import { TasksService } from './tasks.service'
 @Module({
   imports: [
     TypeOrmModule.forFeature([Task, Comment]),
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'NOTIFICATIONS_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://admin:admin@localhost:5672'],
-          queue: 'notifications_queue',
-          queueOptions: {
-            durable: false
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: [configService.getOrThrow<string>('RABBITMQ_URL')],
+            queue: 'notifications_queue',
+            queueOptions: {
+              durable: false
+            }
           }
-        }
+        })
       }
     ])
   ],
