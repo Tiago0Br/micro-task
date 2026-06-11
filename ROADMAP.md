@@ -49,19 +49,19 @@ Building the User Interface with modern React patterns.
   - [x] Build Login/Register forms (`react-hook-form` + `zod`).
   - [x] Implement Auth State Management (**Zustand**).
   - [x] Handle Protected Routes (Redirect if unauthenticated).
-- [ ] **Task Management UI**
+- [X] **Task Management UI**
   - [x] Build Data Table for Task List (Filtering/Sorting).
   - [x] Build Task Creation/Edit Modals.
   - [x] Implement Task Detail View.
-  - [ ] Connect UI to Backend API.
+  - [X] Connect UI to Backend API.
 
 ## 📡 Phase 4: Distributed Systems & Real-time (Days 15-18)
 The "Heavy Lifting": Event-driven architecture and WebSockets.
 
-- [ ] **Event Bus (RabbitMQ)**
-  - [ ] **Producer (Tasks Service):** Publish `task.created` & `task.updated` events.
-  - [ ] **Consumer (Notifications Service):** Listen to events and persist notifications.
-  - [ ] Handle connection resilience (Retry logic).
+- [X] **Event Bus (RabbitMQ)**
+  - [X] **Producer (Tasks Service):** Publish `task.created` & `task.updated` events.
+  - [X] **Consumer (Notifications Service):** Listen to events and persist notifications.
+  - [X] Handle connection resilience (Retry logic).
 - [ ] **Real-time Gateway (WebSockets)**
   - [ ] Configure WebSocket Gateway (Socket.io/WS).
   - [ ] Emit events to specific connected clients.

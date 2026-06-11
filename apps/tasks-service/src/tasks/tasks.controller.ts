@@ -28,8 +28,7 @@ export class TasksController {
     @Body(new ValidationPipe()) body: CreateTaskDto,
     @CurrentUser() user: LoggedUser
   ) {
-    const { userId } = user
-    return this.tasksService.create(body, userId)
+    return this.tasksService.create(body, user)
   }
 
   @Put(':id')

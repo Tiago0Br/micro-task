@@ -1,5 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { ClientProxy } from '@nestjs/microservices'
 import { InjectRepository } from '@nestjs/typeorm'
+import type { LoggedUser } from 'src/auth/jwt.strategy'
 import { Repository } from 'typeorm'
 import { CreateTaskDto } from './dtos/create-task.dto'
 import { UpdateTaskDto } from './dtos/update-task.dto'
@@ -8,20 +10,27 @@ import { Task } from './entities/task.entity'
 @Injectable()
 export class TasksService {
   constructor(
-    @InjectRepository(Task)
-    private readonly tasksRepository: Repository<Task>
+    @InjectRepository(Task) private readonly tasksRepository: Repository<Task>,
+    @Inject('NOTIFICATIONS_SERVICE') private readonly client: ClientProxy
   ) {}
 
-  async create(dto: CreateTaskDto, userId: string) {
+  async create(dto: CreateTaskDto, user: LoggedUser) {
     const task = this.tasksRepository.create({
       title: dto.title,
       description: dto.description,
       deadline: dto.deadline,
       priority: dto.priority,
-      creatorId: userId
+      creatorId: user.userId
     })
 
     await this.tasksRepository.save(task)
+
+    this.client.emit('task.created', {
+      taskId: task.id,
+      title: task.title,
+      userId: user.userId,
+      email: user.email
+    })
 
     return {
       id: task.id,
