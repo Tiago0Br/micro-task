@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Notification } from './entities/notification.entity'
+import { NotificationsGateway } from './notifications.gateway'
 
 export interface NotificationType {
   title: string
@@ -13,7 +14,8 @@ export interface NotificationType {
 export class AppService {
   constructor(
     @InjectRepository(Notification)
-    private notificationsRepo: Repository<Notification>
+    private notificationsRepo: Repository<Notification>,
+    private notificationsGateway: NotificationsGateway
   ) {}
 
   async createNotification(data: NotificationType) {
@@ -25,6 +27,8 @@ export class AppService {
 
     await this.notificationsRepo.save(notification)
     console.log(`Notificação salva no banco para o usuário ${data.userId}`)
+
+    this.notificationsGateway.sendNotificationToUser(data.userId, notification)
 
     return notification
   }

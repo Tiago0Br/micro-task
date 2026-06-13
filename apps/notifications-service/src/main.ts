@@ -5,6 +5,7 @@ import { AppModule } from './app.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  app.enableCors()
   const configService = app.get(ConfigService)
 
   app.connectMicroservice<MicroserviceOptions>({
@@ -20,5 +21,8 @@ async function bootstrap() {
 
   await app.startAllMicroservices()
   await app.listen(3004)
+
+  console.log('🚀 Notifications Service rodando na porta 3004 (WS)')
+  console.log('📬 Notifications Service ouvindo RabbitMQ...')
 }
 bootstrap()

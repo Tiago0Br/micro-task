@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { Notification } from './entities/notification.entity'
+import { NotificationsGateway } from './notifications.gateway'
 
 @Module({
   imports: [
@@ -24,6 +25,6 @@ import { Notification } from './entities/notification.entity'
     TypeOrmModule.forFeature([Notification])
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService, NotificationsGateway]
 })
 export class AppModule {}
