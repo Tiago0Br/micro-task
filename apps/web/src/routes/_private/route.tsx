@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Outlet, useNavigate } from '@tanstack/react-router'
 import { LayoutDashboard, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useWebSocket } from '@/hooks/use-websocket'
 import { useAuthStore } from '@/stores/auth.store'
 
 export const Route = createFileRoute('/_private')({
@@ -16,6 +17,8 @@ function AppLayoutComponent() {
     logout()
     navigate({ to: '/login' })
   }
+
+  useWebSocket()
 
   return (
     <div className="flex h-screen bg-gray-50">

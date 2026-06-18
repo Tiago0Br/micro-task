@@ -62,13 +62,13 @@ The "Heavy Lifting": Event-driven architecture and WebSockets.
   - [X] **Producer (Tasks Service):** Publish `task.created` & `task.updated` events.
   - [X] **Consumer (Notifications Service):** Listen to events and persist notifications.
   - [X] Handle connection resilience (Retry logic).
-- [ ] **Real-time Gateway (WebSockets)**
-  - [ ] Configure WebSocket Gateway (Socket.io/WS).
-  - [ ] Emit events to specific connected clients.
-- [ ] **Frontend Integration**
-  - [ ] Create `useWebSocket` hook.
-  - [ ] Display Real-time Toasts/Alerts on new events.
-  - [ ] Optimistic UI updates (optional).
+- [X] **Real-time Gateway (WebSockets)**
+  - [X] Configure WebSocket Gateway (Socket.io/WS).
+  - [X] Emit events to specific connected clients.
+- [X] **Frontend Integration**
+  - [X] Create `useWebSocket` hook.
+  - [X] Display Real-time Toasts/Alerts on new events.
+  - [X] Optimistic UI updates (optional).
 
 ## 🚀 Phase 5: Polish & Deliverables (Days 19-20)
 Refining the experience and documenting the journey.
