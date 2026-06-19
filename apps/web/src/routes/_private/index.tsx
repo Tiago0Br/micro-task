@@ -26,10 +26,6 @@ export const Route = createFileRoute('/_private/')({
 function IndexPage() {
   const { tasks, isTasksLoading } = useTasks()
 
-  if (!isTasksLoading && !tasks) {
-    return <div>Nenhuma tarefa cadastrada</div>
-  }
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -46,7 +42,7 @@ function IndexPage() {
         />
       </div>
 
-      <DataTable columns={TasksColumns} data={tasks ?? []} />
+      <DataTable columns={TasksColumns} data={tasks ?? []} isLoading={isTasksLoading} />
     </div>
   )
 }

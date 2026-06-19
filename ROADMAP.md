@@ -74,7 +74,7 @@ The "Heavy Lifting": Event-driven architecture and WebSockets.
 Refining the experience and documenting the journey.
 
 - [ ] **Quality of Life**
-  - [ ] Add Skeleton Loaders & Loading States.
+  - [x] Add Skeleton Loaders & Loading States.
   - [ ] Global Error Handling (Backend & Frontend).
   - [ ] Docker production build verification.
 - [ ] **Documentation**

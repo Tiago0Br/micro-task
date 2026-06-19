@@ -6,7 +6,12 @@
     "includes": ["**", "!src/routeTree.gen.ts"]
   },
   "linter": {
-    "includes": ["**", "!src/routeTree.gen.ts"]
+    "includes": ["**", "!src/routeTree.gen.ts"],
+    "rules": {
+      "suspicious": {
+        "noArrayIndexKey": "off"
+      }
+    }
   },
   "css": {
     "parser": {

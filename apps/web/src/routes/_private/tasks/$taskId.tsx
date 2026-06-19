@@ -5,6 +5,7 @@ import { ptBR } from 'date-fns/locale'
 import { ArrowLeftIcon, BadgeIcon, CalendarIcon, ClockIcon, EditIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import { getTaskByIdRequest } from '@/http/get-task-by-id'
 import { useAuthStore } from '@/stores/auth.store'
 
@@ -33,7 +34,76 @@ function TaskDetailPage() {
     queryFn: () => getTaskByIdRequest(taskId)
   })
 
-  if (isLoading) return <div className="p-8">Carregando detalhes...</div>
+  if (isLoading) {
+    return (
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" disabled>
+            <ArrowLeftIcon className="mr-2 h-4 w-4" /> Voltar
+          </Button>
+          <h1 className="text-2xl font-bold text-gray-800">Detalhes da Tarefa</h1>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="md:col-span-2 space-y-6">
+            <Card>
+              <CardHeader className="flex flex-row items-start justify-between">
+                <div className="space-y-1">
+                  <Skeleton className="h-7 w-62.5" />
+                  <div className="flex gap-2 mt-2">
+                    <Skeleton className="h-5 w-16" />
+                    <Skeleton className="h-5 w-16" />
+                  </div>
+                </div>
+                <Skeleton className="h-9 w-20" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-5 w-24 mb-4" />
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-3/4" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <Skeleton className="h-6 w-32" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-24 w-full rounded-lg" />
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <Skeleton className="h-5 w-24" />
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="h-10 w-10 rounded-full" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-12" />
+                    <Skeleton className="h-4 w-32" />
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Skeleton className="h-10 w-10 rounded-full" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-16" />
+                    <Skeleton className="h-4 w-32" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    )
+  }
   if (!task) return <div className="p-8">Tarefa não encontrada.</div>
 
   return (
