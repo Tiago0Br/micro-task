@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { GlobalExceptionFilter } from '@repo/errors/nestjs'
@@ -6,9 +7,12 @@ import { AppModule } from './app.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  const configService = app.get(ConfigService)
+
   app.useGlobalFilters(new GlobalExceptionFilter())
 
-  app.enableCors({ origin: 'http://localhost:5173' })
+  const frontendUrl = configService.getOrThrow<string>('FRONTEND_URL')
+  app.enableCors({ origin: frontendUrl })
 
   const config = new DocumentBuilder()
     .setTitle('MicroTask API Gateway')
@@ -23,7 +27,7 @@ async function bootstrap() {
   app.use(
     '/auth',
     createProxyMiddleware({
-      target: process.env.AUTH_SERVICE_URL,
+      target: configService.getOrThrow<string>('AUTH_SERVICE_URL'),
       changeOrigin: true,
       pathRewrite: {
         '^/auth': ''
@@ -34,7 +38,7 @@ async function bootstrap() {
   app.use(
     '/tasks',
     createProxyMiddleware({
-      target: process.env.TASKS_SERVICE_URL,
+      target: configService.getOrThrow<string>('TASKS_SERVICE_URL'),
       changeOrigin: true,
       pathRewrite: {
         '^/tasks': ''
@@ -45,7 +49,7 @@ async function bootstrap() {
   app.use(
     '/notifications',
     createProxyMiddleware({
-      target: process.env.NOTIFICATIONS_SERVICE_URL,
+      target: configService.getOrThrow<string>('NOTIFICATIONS_SERVICE_URL'),
       changeOrigin: true,
       pathRewrite: {
         '^/notifications': ''
