@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { type MicroserviceOptions, Transport } from '@nestjs/microservices'
-import { GlobalExceptionFilter } from '@repo/errors'
+import { GlobalExceptionFilter } from '@repo/errors/nestjs'
 import { AppModule } from './app.module'
 
 async function bootstrap() {

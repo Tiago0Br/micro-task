@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { GlobalExceptionFilter } from '@repo/errors'
+import { GlobalExceptionFilter } from '@repo/errors/nestjs'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { AppModule } from './app.module'
 

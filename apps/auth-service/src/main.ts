@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core'
-import { GlobalExceptionFilter } from '@repo/errors'
+import { GlobalExceptionFilter } from '@repo/errors/nestjs'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
