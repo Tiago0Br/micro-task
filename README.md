@@ -29,11 +29,43 @@ MicroTask is a task management application built with a microservices architectu
 
 The project consists of several microservices coordinated through an API Gateway:
 
-- **API Gateway:** Single entry point for the frontend, proxying requests to internal services.
+- **API Gateway:** Single entry point for the frontend, proxying requests to internal services via HTTP.
 - **Auth Service:** Handles user registration, login, and JWT-based authentication.
 - **Tasks Service:** Manages task CRUD operations and comments.
-- **Notifications Service:** (In progress) Consumes events via RabbitMQ to send notifications.
+- **Notifications Service:** Consumes domain events via RabbitMQ to process and send real-time notifications.
 - **Web Frontend:** A modern React application to interact with the system.
+
+### Architecture Diagram
+
+```mermaid
+graph TD
+    Client[Web Frontend<br>React/Vite] -->|HTTP| Gateway[API Gateway<br>NestJS]
+
+    Gateway -->|Proxy /auth| Auth[Auth Service<br>NestJS]
+    Gateway -->|Proxy /tasks| Tasks[Tasks Service<br>NestJS]
+
+    Auth -->|Read/Write| DB[(PostgreSQL)]
+    Tasks -->|Read/Write| DB
+
+    Tasks -.->|Publish Event| RMQ{RabbitMQ}
+    RMQ -.->|Consume Event| Notif[Notifications Service<br>NestJS]
+    Notif -->|Read/Write| DB
+
+    classDef service fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef client fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef infra fill:#bfb,stroke:#333,stroke-width:2px;
+    
+    class Client client;
+    class Gateway,Auth,Tasks,Notif service;
+    class DB,RMQ infra;
+```
+
+## ⚖️ Trade-offs & Technical Decisions
+
+- **Single Database vs Database per Service**: While a strict microservices architecture often dictates a separate database for each service, this project utilizes a single PostgreSQL instance with logical separation through different schemas (`auth`, `tasks`, `notifications`). This trade-off significantly reduces infrastructure overhead for a study/demo project while still maintaining data boundary principles.
+- **API Gateway Proxying**: Instead of implementing complex GraphQL federation or a dedicated reverse proxy like Nginx/Traefik, the API Gateway is built in NestJS using `http-proxy-middleware`. This allows us to keep the entire backend stack unified under NestJS, reducing the learning curve and context switching, even though a dedicated proxy might be more performant in high-scale scenarios.
+- **Turborepo & pnpm**: The monorepo structure makes it much easier to share common logic, types, and ESLint/Biome configurations across all microservices and frontend, eliminating the need to publish internal libraries to a registry.
+- **Docker Multi-stage Builds**: We utilize `turbo prune` in our Dockerfile. This ensures that when building a specific microservice's container image, only the required packages and dependencies are copied over, keeping image sizes small and build times fast.
 
 ## 🛠️ Getting Started
 
@@ -42,7 +74,9 @@ The project consists of several microservices coordinated through an API Gateway
 - [pnpm](https://pnpm.io/)
 - [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)
 
-### Installation
+### Installation & Execution (Docker Environment)
+
+The easiest way to run the entire project is using Docker. This will spin up the database, message broker, all microservices, and the frontend web app.
 
 1. Clone the repository:
    ```bash
@@ -50,17 +84,28 @@ The project consists of several microservices coordinated through an API Gateway
    cd micro-task
    ```
 
-2. Install dependencies:
+2. Start the infrastructure using Docker Compose:
+   ```bash
+   docker compose up --build
+   ```
+
+3. Access the web application at `http://localhost:3000`.
+
+### Local Development (Without Docker for Apps)
+
+If you prefer to run the applications locally to have a faster feedback loop during development:
+
+1. Install dependencies:
    ```bash
    pnpm install
    ```
 
-3. Start the infrastructure (Postgres, RabbitMQ):
+2. Start only the infrastructure dependencies (Postgres, RabbitMQ):
    ```bash
-   docker-compose up -d
+   docker-compose up -d db rabbitmq
    ```
 
-4. Run the applications in development mode:
+3. Run the applications in development mode using Turborepo:
    ```bash
    pnpm dev
    ```

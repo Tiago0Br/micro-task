@@ -77,7 +77,7 @@ Refining the experience and documenting the journey.
   - [X] Add Skeleton Loaders & Loading States.
   - [X] Global Error Handling (Backend & Frontend).
   - [X] Docker production build verification.
-- [ ] **Documentation**
-  - [ ] Write detailed **README.md**.
-  - [ ] Create Architecture Diagram.
-  - [ ] Write "Trade-offs & Technical Decisions" section.
+- [X] **Documentation**
+  - [X] Write detailed **README.md**.
+  - [X] Create Architecture Diagram.
+  - [X] Write "Trade-offs & Technical Decisions" section.
