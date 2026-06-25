@@ -1,4 +1,5 @@
 services:
+  # === Banco de Dados ===
   db:
     image: postgres:17-alpine
     container_name: microtask-db
@@ -13,6 +14,8 @@ services:
       - ./.docker/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - microtask-net
+
+  # === Message Broker ===
   rabbitmq:
     image: rabbitmq:3.13-management-alpine
     container_name: microtask-rabbitmq
@@ -26,6 +29,112 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - microtask-net
+
+  # === API Gateway ===
+  api-gateway:
+    container_name: microtask-gateway
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: api-gateway
+    ports:
+      - '3001:3001'
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://postgres:password@db:5432/microtask_db
+      RABBITMQ_URL: amqp://admin:admin@rabbitmq:5672
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - microtask-net
+    volumes:
+      - ./apps/api-gateway:/app/apps/api-gateway
+      - ./packages:/app/packages
+
+  # === Auth Service ===
+  auth-service:
+    container_name: microtask-auth
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: auth-service
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://postgres:password@db:5432/microtask_db
+      RABBITMQ_URL: amqp://admin:admin@rabbitmq:5672
+      JWT_SECRET: super-secret-key-123
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - microtask-net
+    volumes:
+      - ./apps/auth-service:/app/apps/auth-service
+      - ./packages:/app/packages
+
+  # === Tasks Service ===
+  tasks-service:
+    container_name: microtask-tasks
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: tasks-service
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://postgres:password@db:5432/microtask_db
+      RABBITMQ_URL: amqp://admin:admin@rabbitmq:5672
+      JWT_SECRET: super-secret-key-123
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - microtask-net
+    volumes:
+      - ./apps/tasks-service:/app/apps/tasks-service
+      - ./packages:/app/packages
+
+  # === Notifications Service ===
+  notifications-service:
+    container_name: microtask-notifications
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: notifications-service
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://postgres:password@db:5432/microtask_db
+      RABBITMQ_URL: amqp://admin:admin@rabbitmq:5672
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - microtask-net
+    volumes:
+      - ./apps/notifications-service:/app/apps/notifications-service
+      - ./packages:/app/packages
+
+  # === Frontend (Web) ===
+  web:
+    container_name: microtask-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: web
+    ports:
+      - '3000:5173'
+    environment:
+      VITE_API_URL: http://localhost:3001
+    networks:
+      - microtask-net
+    volumes:
+      - ./apps/web:/app/apps/web
+      - ./packages:/app/packages
 
 volumes:
   postgres_data:

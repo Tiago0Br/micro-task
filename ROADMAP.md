@@ -73,10 +73,10 @@ The "Heavy Lifting": Event-driven architecture and WebSockets.
 ## 🚀 Phase 5: Polish & Deliverables (Days 19-20)
 Refining the experience and documenting the journey.
 
-- [ ] **Quality of Life**
-  - [x] Add Skeleton Loaders & Loading States.
-  - [x] Global Error Handling (Backend & Frontend).
-  - [ ] Docker production build verification.
+- [X] **Quality of Life**
+  - [X] Add Skeleton Loaders & Loading States.
+  - [X] Global Error Handling (Backend & Frontend).
+  - [X] Docker production build verification.
 - [ ] **Documentation**
   - [ ] Write detailed **README.md**.
   - [ ] Create Architecture Diagram.
