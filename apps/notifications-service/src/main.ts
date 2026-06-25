@@ -1,10 +1,12 @@
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { type MicroserviceOptions, Transport } from '@nestjs/microservices'
+import { GlobalExceptionFilter } from '@repo/errors'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  app.useGlobalFilters(new GlobalExceptionFilter())
   app.enableCors()
   const configService = app.get(ConfigService)
 

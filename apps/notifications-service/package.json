@@ -23,6 +23,7 @@
     "@nestjs/platform-socket.io": "^11.1.26",
     "@nestjs/typeorm": "^11.0.1",
     "@nestjs/websockets": "^11.1.26",
+    "@repo/errors": "workspace:*",
     "amqp-connection-manager": "^5.0.0",
     "amqplib": "^2.0.1",
     "pg": "^8.16.3",

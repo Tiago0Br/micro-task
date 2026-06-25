@@ -75,7 +75,7 @@ Refining the experience and documenting the journey.
 
 - [ ] **Quality of Life**
   - [x] Add Skeleton Loaders & Loading States.
-  - [ ] Global Error Handling (Backend & Frontend).
+  - [x] Global Error Handling (Backend & Frontend).
   - [ ] Docker production build verification.
 - [ ] **Documentation**
   - [ ] Write detailed **README.md**.

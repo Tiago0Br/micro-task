@@ -1,10 +1,12 @@
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { GlobalExceptionFilter } from '@repo/errors'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  app.useGlobalFilters(new GlobalExceptionFilter())
 
   app.enableCors({ origin: 'http://localhost:5173' })
 
