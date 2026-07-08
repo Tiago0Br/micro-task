@@ -20,7 +20,8 @@
     "build": "tsup src/index.ts src/nestjs-filter.ts --format cjs,esm --dts",
     "dev": "tsup src/index.ts src/nestjs-filter.ts --format cjs,esm --dts --watch",
     "lint": "biome check --write",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@nestjs/common": "^11.1.11",
